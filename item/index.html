@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFT Details - 0xAddress Marketplace</title>
+    
+    <!-- SEO Meta Tags (will be updated dynamically) -->
+    <meta name="description" content="View NFT details, make offers, and buy on the 0xAddress NFT Marketplace.">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook (updated dynamically by JS) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="" id="og-url">
+    <meta property="og:title" content="NFT - 0xAddress Marketplace" id="og-title">
+    <meta property="og:description" content="View this NFT on 0xAddress Marketplace" id="og-description">
+    <meta property="og:image" content="" id="og-image">
+    <meta property="og:image:width" content="600">
+    <meta property="og:image:height" content="600">
+    <meta property="og:site_name" content="0xAddress NFT Marketplace">
+    
+    <!-- Twitter Card (updated dynamically by JS) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="" id="twitter-url">
+    <meta name="twitter:title" content="NFT - 0xAddress Marketplace" id="twitter-title">
+    <meta name="twitter:description" content="View this NFT on 0xAddress Marketplace" id="twitter-description">
+    <meta name="twitter:image" content="" id="twitter-image">
+    <meta name="twitter:site" content="@0xAddress">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖼️</text></svg>">
+    
+    <!-- Fonts & Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/styles.css?v=0.1.5">
+    <link rel="stylesheet" href="../../../css/item.css?v=0.1.5">
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    
+    <!-- AddToAny Share Buttons -->
+    <script async src="https://static.addtoany.com/menu/page.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-left">
+                <a href="../../../" class="back-link" id="backLink">← Back</a>
+                <a href="../../../" class="header-logo">
+                    <div class="header-logo-icon">🖼️</div>
+                    <div class="header-logo-text">
+                        NFT Marketplace
+                        <span id="networkName">Loading...</span>
+                    </div>
+                </a>
+            </div>
+            <div class="header-actions">
+                <div class="header-controls">
+                    <button class="btn-icon" id="langToggle" title="Language">EN</button>
+                    <button class="btn-icon" id="themeToggle" title="Theme">🌙</button>
+                </div>
+                <div class="wallet-info hidden" id="walletInfo">
+                    <div class="wallet-badge">
+                        <span class="wallet-address" id="walletAddress">0x000...0000</span>
+                        <span class="wallet-balance" id="walletBalance">0.00 SYS</span>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="connectBtn" data-i18n="connectWallet">Connect Wallet</button>
+                <button class="btn btn-danger btn-sm hidden" id="disconnectBtn" data-i18n="disconnect">Disconnect</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Share Bar -->
+    <div class="share-bar">
+        <div class="container">
+            <div class="share-bar-content">
+                <span class="share-bar-label" data-i18n="share">Share:</span>
+                <div class="a2a_kit a2a_kit_size_24 a2a_default_style">
+                    <a class="a2a_button_x" title="X / Twitter"></a>
+                    <a class="a2a_button_facebook" title="Facebook"></a>
+                    <a class="a2a_button_telegram" title="Telegram"></a>
+                    <a class="a2a_button_whatsapp" title="WhatsApp"></a>
+                    <a class="a2a_button_copy_link" title="Copy Link"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <main class="main">
+        <div class="container">
+            <div class="item-layout">
+                <!-- Left Column: Image + Accordions -->
+                <div class="item-left">
+                    <!-- NFT Image -->
+                    <div class="item-image-card">
+                        <div class="item-image-container loading" id="imageContainer">
+                            <img class="item-image" id="nftImage" src="" alt="NFT">
+                            <div class="item-network-badge" id="networkBadge">⚡ Rollux</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Accordion: Attributes -->
+                    <div class="accordion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>🏷️ <span data-i18n="attributes">Attributes</span></span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content open">
+                            <div class="attributes-grid" id="attributesGrid">
+                                <p class="text-muted" data-i18n="noAttributes">No attributes</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion: Token Standards & Metadata -->
+                    <div class="accordion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>🔧 <span data-i18n="tokenStandards">Token Standards</span></span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content open">
+                            <div class="standards-list" id="standardsList">
+                                <p class="text-muted">Loading...</p>
+                            </div>
+                            <div class="metadata-storage" id="metadataStorage">
+                                <!-- Storage type: IPFS/HTTPS/On-chain -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion: Blockchain Details -->
+                    <div class="accordion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>⛓️ <span data-i18n="blockchain">Blockchain</span></span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content open">
+                            <div class="details-list" id="detailsList"></div>
+                        </div>
+                    </div>
+
+                    <!-- Accordion: How it Works -->
+                    <div class="accordion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>📚 <span data-i18n="howItWorks">How it Works</span></span>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="how-it-works">
+                                <p class="text-muted" data-i18n="learnHow">Learn how the marketplace smart contract works</p>
+                                <button class="btn btn-secondary btn-sm" onclick="showHowItWorksModal('offer')">
+                                    💰 <span data-i18n="howOffers">How Offers Work</span>
+                                </button>
+                                <button class="btn btn-secondary btn-sm" onclick="showHowItWorksModal('listing')">
+                                    🏷️ <span data-i18n="howListings">How Listings Work</span>
+                                </button>
+                                <button class="btn btn-secondary btn-sm" onclick="showHowItWorksModal('buy')">
+                                    🛒 <span data-i18n="howBuy">How Buy Now Works</span>
+                                </button>
+                                <button class="btn btn-secondary btn-sm" onclick="showHowItWorksModal('royalties')">
+                                    👑 <span data-i18n="howRoyalties">How Royalties Work</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Info + Actions + Activity -->
+                <div class="item-right">
+                    <!-- Title & Description -->
+                    <div class="item-header">
+                        <span class="item-collection" id="collectionName"></span>
+                        <h1 class="item-title" id="nftTitle">Loading...</h1>
+                        <div class="item-owner-row">
+                            <span class="item-owner-label" data-i18n="ownedBy">Owned by</span>
+                            <a href="#" class="item-owner-link" id="ownerLink" target="_blank">
+                                <span id="ownerAddressShort">—</span>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            </a>
+                        </div>
+                        <p class="item-description" id="nftDescription"></p>
+                    </div>
+
+                    <!-- Buy Now Card (if listed, non-owner) -->
+                    <div class="item-card accent hidden" id="buyCard">
+                        <div class="item-card-body">
+                            <div class="buy-now-section">
+                                <div class="buy-now-price">
+                                    <span class="buy-label" data-i18n="currentPrice">Current Price</span>
+                                    <span class="buy-value" id="buyPrice">0.00 SYS</span>
+                                </div>
+                                <button class="btn btn-primary btn-lg" id="buyBtn">
+                                    🛒 <span data-i18n="buyNow">Buy Now</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Make Offer (non-owner) -->
+                    <div class="item-card" id="actionsCard">
+                        <div class="item-card-header">
+                            <h3>💰 <span data-i18n="makeOffer">Make Offer</span></h3>
+                        </div>
+                        <div class="item-card-body">
+                            <div class="offer-form">
+                                <div class="input-group">
+                                    <input type="number" class="input" id="offerAmount" placeholder="0.00" step="0.01" min="0">
+                                    <span class="input-suffix" id="offerSymbol">SYS</span>
+                                </div>
+                                <button class="btn btn-primary btn-block" id="makeOfferBtn" data-i18n="makeOffer">Make Offer</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- List for Sale (owner only) -->
+                    <div class="item-card hidden" id="listingCard">
+                        <div class="item-card-header">
+                            <h3>🏷️ <span data-i18n="listForSale">List for Sale</span></h3>
+                        </div>
+                        <div class="item-card-body">
+                            <div class="offer-form" id="listingForm">
+                                <div class="input-group">
+                                    <input type="number" class="input" id="listingPrice" placeholder="0.00" step="0.01" min="0">
+                                    <span class="input-suffix" id="listingSymbol">SYS</span>
+                                </div>
+                                <button class="btn btn-primary btn-block" id="listBtn" data-i18n="listForSale">List for Sale</button>
+                            </div>
+                            <div class="listing-active hidden" id="listingActive">
+                                <p><span data-i18n="listedAt">Listed at</span> <strong id="currentPrice">0.00</strong> <span id="priceSymbol">SYS</span></p>
+                                <div class="listing-actions">
+                                    <button class="btn btn-secondary" id="updateListingBtn" data-i18n="updatePrice">Update Price</button>
+                                    <button class="btn btn-danger" id="cancelListingBtn" data-i18n="cancelListing">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Offers List -->
+                    <div class="item-card">
+                        <div class="item-card-header">
+                            <h3>📋 <span data-i18n="offers">Offers</span></h3>
+                        </div>
+                        <div class="item-card-body">
+                            <div class="orders-list" id="ordersList">
+                                <p class="text-muted" data-i18n="noOffers">No offers yet</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activity / Transactions -->
+                    <div class="item-card">
+                        <div class="item-card-header">
+                            <h3>📈 <span data-i18n="activity">Activity</span></h3>
+                        </div>
+                        <div class="item-card-body">
+                            <!-- Chart first -->
+                            <div class="chart-container">
+                                <canvas id="priceChart"></canvas>
+                            </div>
+                            <!-- Sales History Accordion -->
+                            <div class="sales-history-accordion" id="salesHistoryAccordion">
+                                <button class="sales-history-toggle" onclick="toggleSalesHistory()">
+                                    <span class="sales-history-title">
+                                        📋 <span data-i18n="salesReport">Sales History</span>
+                                        <span class="sales-history-count" id="salesCount">0</span>
+                                    </span>
+                                    <svg class="sales-history-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"/>
+                                    </svg>
+                                </button>
+                                <div class="sales-history-content" id="salesHistoryContent">
+                                    <div class="activity-list" id="activityList">
+                                        <p class="text-muted" data-i18n="noActivity">No activity yet</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Powered by <a href="https://0xaddress.com" target="_blank">0xAddress.com</a></p>
+            <a href="../../../nft-marketplace.zip" class="btn btn-secondary btn-download" id="downloadBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span data-i18n="download">Download</span>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Wallet Modal -->
+    <div class="modal-overlay" id="walletModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">Select Wallet</div>
+                <button class="modal-close" onclick="closeModal('walletModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtitle">Choose how you want to connect</p>
+                <div class="wallet-options">
+                    <button class="wallet-option" id="metamaskOption" onclick="connectWallet('metamask')">
+                        <div class="wallet-option-icon">
+                            <svg viewBox="0 0 40 40" fill="none"><path d="M35.9 3L22.2 13.2l2.5-6L35.9 3z" fill="#E2761B"/><path d="M4.1 3l13.6 10.3-2.4-6.1L4.1 3zm26.7 23.3l-3.6 5.5 7.7 2.1 2.2-7.5-6.3-.1zm-29.7.1l2.2 7.5 7.7-2.1-3.6-5.5-6.3.1z" fill="#E4761B"/><path d="M10.1 17.4l-2.2 3.3 7.7.3-.3-8.3-5.2 4.7zm19.8 0l-5.3-4.8-.2 8.4 7.7-.3-2.2-3.3z" fill="#E4761B"/><path d="M34.9 19.1l-7.1-2.1 2.2 3.3-3.2 6.2 4.2-.1h6.2l-2.3-7.3zM10.1 17l-7 2.1-2.4 7.3H7l4.2.1-3.2-6.2 2.1-3.3zm9.5 3.4l.5-7.9 2-5.6h-9.3l2 5.6.5 7.9.2 2.4v6.2h3.7l.1-6.2.3-2.4z" fill="#F6851B"/></svg>
+                        </div>
+                        <div class="wallet-option-info">
+                            <div class="wallet-option-name">MetaMask</div>
+                            <div class="wallet-option-status" id="metamaskStatus">Checking...</div>
+                        </div>
+                        <div class="wallet-option-arrow">→</div>
+                    </button>
+                    <button class="wallet-option" id="oxaddressOption" onclick="connectWallet('oxaddress')">
+                        <div class="wallet-option-icon">
+                            <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" fill="url(#g2)" stroke="#a855f7" stroke-width="2"/><text x="20" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="bold" font-family="Arial">0x</text><defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#7c5cff"/><stop offset="100%" stop-color="#a855f7"/></linearGradient></defs></svg>
+                        </div>
+                        <div class="wallet-option-info">
+                            <div class="wallet-option-name">0xAddress</div>
+                            <div class="wallet-option-status" id="oxaddressStatus">Checking...</div>
+                        </div>
+                        <div class="wallet-option-arrow">→</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works Modal -->
+    <div class="modal-overlay" id="howItWorksModal">
+        <div class="modal modal-lg">
+            <div class="modal-header">
+                <div class="modal-title" id="howItWorksTitle">How it Works</div>
+                <button class="modal-close" onclick="closeModal('howItWorksModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="how-it-works-content">
+                    <!-- Diagram -->
+                    <div class="diagram-section">
+                        <h4>📊 Flow Diagram</h4>
+                        <div class="mermaid-container" id="mermaidDiagram"></div>
+                    </div>
+                    
+                    <!-- Contract Code -->
+                    <div class="code-section">
+                        <h4>📜 Smart Contract Code</h4>
+                        <pre class="code-block"><code id="contractCode"></code></pre>
+                    </div>
+                    
+                    <!-- Explanation -->
+                    <div class="explanation-section">
+                        <h4>📖 Explanation</h4>
+                        <div id="explanationText"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction Error Modal -->
+    <div class="modal-overlay" id="txErrorModal">
+        <div class="modal">
+            <div class="modal-header modal-header-error">
+                <div class="modal-title">
+                    <span class="modal-icon-error">⚠️</span>
+                    <span data-i18n="txError">Transaction Error</span>
+                </div>
+                <button class="modal-close" onclick="closeModal('txErrorModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="tx-error-content">
+                    <p class="tx-error-message" id="txErrorMessage">An error occurred</p>
+                    
+                    <div class="tx-error-accordion">
+                        <button class="tx-error-accordion-btn" onclick="toggleTxErrorDetails()">
+                            <span data-i18n="technicalDetails">Technical Details</span>
+                            <svg class="tx-error-accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"/>
+                            </svg>
+                        </button>
+                        <div class="tx-error-details hidden" id="txErrorDetails">
+                            <pre id="txErrorDetailsText"></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('txErrorModal')" data-i18n="cancel">Cancel</button>
+                <button class="btn btn-primary" id="txErrorRetryBtn" onclick="retryTransaction()">
+                    🔄 <span data-i18n="sendAnyway">Send Anyway</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span id="toastIcon">✓</span>
+        <span id="toastText">Success</span>
+    </div>
+
+    <script src="../../../js/item.js?v=0.1.2"></script>
+</body>
+</html>

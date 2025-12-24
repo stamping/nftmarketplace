@@ -1,0 +1,54 @@
+{
+    "networks": {
+        "570": {
+            "name": "Rollux",
+            "chainIdHex": "0x23a",
+            "rpc": "https://rpc.rollux.com",
+            "explorer": "https://explorer.rollux.com",
+            "nativeCurrency": {
+                "name": "Syscoin",
+                "symbol": "SYS",
+                "decimals": 18
+            },
+            "marketplace": "0xB3acDf98517c1230C8870a1939bc84CCf8e04921",
+            "color": "#00D1FF",
+            "icon": "⚡"
+        },
+        "57000": {
+            "name": "Rollux Testnet",
+            "chainIdHex": "0xdea8",
+            "rpc": "https://rpc-tanenbaum.rollux.com",
+            "explorer": "https://rollux.tanenbaum.io",
+            "nativeCurrency": {
+                "name": "Syscoin",
+                "symbol": "tSYS",
+                "decimals": 18
+            },
+            "marketplace": "0x0000000000000000000000000000000000000000",
+            "color": "#FF6B00",
+            "icon": "🧪"
+        },
+        "1": {
+            "name": "Ethereum",
+            "chainIdHex": "0x1",
+            "rpc": "https://eth.llamarpc.com",
+            "explorer": "https://etherscan.io",
+            "nativeCurrency": {
+                "name": "Ether",
+                "symbol": "ETH",
+                "decimals": 18
+            },
+            "marketplace": "0x0000000000000000000000000000000000000000",
+            "color": "#627EEA",
+            "icon": "Ξ"
+        }
+    },
+    "collections": [
+        {
+            "chainId": "570",
+            "contract": "0xD1F3094B4e09Ce7b09836cC27e258f9C916e53a4",
+            "name": "0xAddress NFT",
+            "featured": true
+        }
+    ]
+}

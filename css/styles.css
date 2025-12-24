@@ -1,0 +1,1482 @@
+/* ============================================
+   NFT Marketplace - 0xAddress Style
+   Professional Design System v0.1.4
+   ============================================ */
+
+:root {
+    /* Colors - 0xAddress Style */
+    --primary: #7c5cff;
+    --primary-dark: #6b4de6;
+    --primary-light: #9d85ff;
+    --accent: #a855f7;
+    --success: #22c55e;
+    --error: #ef4444;
+    --warning: #f59e0b;
+    
+    /* Grays */
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    
+    /* Light Theme (Default - matching 0xAddress) */
+    --bg-primary: #f8f9fc;
+    --bg-secondary: #ffffff;
+    --bg-card: rgba(255, 255, 255, 0.8);
+    --bg-elevated: #ffffff;
+    --bg-tertiary: #f3f4f6;
+    --border: rgba(124, 92, 255, 0.15);
+    --border-light: rgba(124, 92, 255, 0.1);
+    --text-primary: #1a1a2e;
+    --text-secondary: #4b5563;
+    --text-tertiary: #9ca3af;
+    
+    /* Gradients - 0xAddress style */
+    --gradient-primary: linear-gradient(135deg, #7c5cff 0%, #a855f7 100%);
+    --gradient-hero: linear-gradient(135deg, #ede9fe 0%, #e0e7ff 50%, #dbeafe 100%);
+    --gradient-card: linear-gradient(180deg, rgba(124, 92, 255, 0.05) 0%, transparent 100%);
+    --gradient-grid: linear-gradient(rgba(124, 92, 255, 0.03) 1px, transparent 1px),
+                     linear-gradient(90deg, rgba(124, 92, 255, 0.03) 1px, transparent 1px);
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(124, 92, 255, 0.05);
+    --shadow-md: 0 4px 12px rgba(124, 92, 255, 0.08);
+    --shadow-lg: 0 8px 30px rgba(124, 92, 255, 0.12);
+    --shadow-glow: 0 0 40px rgba(124, 92, 255, 0.15);
+    
+    /* Typography */
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    
+    /* Spacing */
+    --container-max: 1280px;
+    --container-padding: 24px;
+    
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+    
+    /* Transitions */
+    --transition: all 0.2s ease;
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    --bg-primary: #0f0f1a;
+    --bg-secondary: #16162a;
+    --bg-card: rgba(22, 22, 42, 0.9);
+    --bg-elevated: #1c1c35;
+    --bg-tertiary: #252545;
+    --border: rgba(124, 92, 255, 0.2);
+    --border-light: rgba(124, 92, 255, 0.1);
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0b0;
+    --text-tertiary: #606070;
+    --gradient-hero: linear-gradient(135deg, #1a1a3e 0%, #16162a 50%, #0f0f1a 100%);
+    --gradient-grid: linear-gradient(rgba(124, 92, 255, 0.08) 1px, transparent 1px),
+                     linear-gradient(90deg, rgba(124, 92, 255, 0.08) 1px, transparent 1px);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 40px rgba(124, 92, 255, 0.3);
+}
+
+/* ============================================
+   Reset & Base
+   ============================================ */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+}
+
+/* Grid background - 0xAddress style */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: var(--gradient-grid);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Gradient overlay */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60vh;
+    background: var(--gradient-hero);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+}
+
+/* Ensure content is above the background */
+body > * {
+    position: relative;
+    z-index: 1;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* ============================================
+   Container
+   ============================================ */
+
+.container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+/* ============================================
+   Header
+   ============================================ */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+}
+
+[data-theme="dark"] .header {
+    background: rgba(15, 15, 26, 0.9);
+}
+
+.header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-logo-icon {
+    width: 42px;
+    height: 42px;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: var(--shadow-md);
+}
+
+.header-logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.header-logo-text span {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-tertiary);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* Share Bar (below header) */
+.share-bar {
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 0;
+}
+
+.share-bar .container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.share-bar-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.share-bar-label {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    font-weight: 500;
+}
+
+.share-bar .a2a_kit {
+    display: flex;
+    gap: 4px;
+}
+
+.share-bar .a2a_kit a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-tertiary);
+    transition: all 0.2s;
+    opacity: 0.7;
+}
+
+.share-bar .a2a_kit a:hover {
+    background: var(--primary);
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background: var(--gradient-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+}
+
+.btn-secondary {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+    border-color: var(--primary);
+    background: rgba(124, 92, 255, 0.1);
+}
+
+.btn-danger {
+    background: var(--error);
+    color: white;
+}
+
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+}
+
+.btn-icon {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-icon:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* ============================================
+   Wallet
+   ============================================ */
+
+.wallet-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+.wallet-address {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+
+.wallet-balance {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--success);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ============================================
+   Hero Bar (simple stripe)
+   ============================================ */
+
+.hero-bar {
+    height: 8px;
+    background: var(--gradient-hero);
+}
+
+/* Old Hero (kept for reference, not used)
+.hero {
+    padding: 80px 0;
+    background: var(--gradient-hero);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 48px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 64px;
+}
+
+.hero-stat {
+    text-align: center;
+}
+
+.hero-stat-value {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
+}
+
+.hero-stat-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+*/
+
+/* ============================================
+   Main Content
+   ============================================ */
+
+.main {
+    padding: 48px 0;
+}
+
+/* ============================================
+   Section
+   ============================================ */
+
+.section {
+    margin-bottom: 48px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 16px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-input {
+    padding: 12px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    width: 280px;
+    transition: var(--transition);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.1);
+}
+
+.search-input::placeholder {
+    color: var(--text-tertiary);
+}
+
+/* ============================================
+   NFT Grid
+   ============================================ */
+
+.nft-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.loading-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--text-secondary);
+}
+
+.loading-state .spinner {
+    width: 48px;
+    height: 48px;
+    border: 3px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 16px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   NFT Card - Glassmorphism Style
+   ============================================ */
+
+.nft-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: var(--transition);
+    display: block;
+    box-shadow: var(--shadow-sm);
+}
+
+.nft-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+}
+
+.nft-card-image {
+    position: relative;
+    aspect-ratio: 1;
+    background: var(--bg-tertiary);
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    margin: 12px;
+}
+}
+
+.nft-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.nft-card:hover .nft-card-image img {
+    transform: scale(1.08);
+}
+
+/* Loading skeleton */
+.nft-card-image.loading::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--bg-elevated) 0%, var(--bg-card) 50%, var(--bg-elevated) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    z-index: 1;
+}
+
+.nft-card-image.loading::after {
+    content: '🖼️';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
+    opacity: 0.3;
+    z-index: 2;
+}
+
+@keyframes shimmer {
+    from { background-position: -200% 0; }
+    to { background-position: 200% 0; }
+}
+
+.nft-card-image img.loaded {
+    opacity: 1;
+}
+
+.nft-card-image img:not(.loaded) {
+    opacity: 0;
+}
+
+/* Network Badge */
+.nft-card-network {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: white;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Card Info */
+.nft-card-body {
+    padding: 20px;
+}
+
+.nft-card-collection {
+    font-size: 0.75rem;
+    color: var(--primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.nft-card-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Owner link */
+.nft-card-owner {
+    margin-bottom: 12px;
+}
+
+.nft-card-owner-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--primary);
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    background: rgba(124, 92, 255, 0.1);
+    transition: var(--transition);
+}
+
+.nft-card-owner-link:hover {
+    background: rgba(124, 92, 255, 0.2);
+}
+
+.nft-card-owner-link svg {
+    opacity: 0.7;
+}
+
+.nft-card-meta {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+}
+
+.nft-card-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nft-card-meta-label {
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.nft-card-meta-value {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.nft-card-meta-value.mono {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+}
+
+.nft-card-meta-value.price {
+    color: var(--success);
+    font-weight: 600;
+}
+
+/* ============================================
+   Wallet Modal
+   ============================================ */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    padding: 20px;
+}
+
+.modal-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    width: 100%;
+    max-width: 420px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.95) translateY(20px);
+    transition: var(--transition);
+}
+
+.modal-overlay.visible .modal {
+    transform: scale(1) translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.modal-close {
+    width: 36px;
+    height: 36px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.modal-close:hover {
+    border-color: var(--error);
+    color: var(--error);
+}
+
+.modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.modal-subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.wallet-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.wallet-option {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: var(--bg-elevated);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+    text-align: left;
+}
+
+.wallet-option:hover {
+    border-color: var(--primary);
+    background: rgba(124, 92, 255, 0.05);
+    transform: translateX(4px);
+}
+
+.wallet-option:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.wallet-option-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+}
+
+.wallet-option-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.wallet-option-info {
+    flex: 1;
+}
+
+.wallet-option-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.wallet-option-status {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+}
+
+.wallet-option-status.available {
+    color: var(--success);
+}
+
+.wallet-option-status.unavailable {
+    color: var(--error);
+}
+
+.wallet-option-arrow {
+    font-size: 1.5rem;
+    color: var(--text-tertiary);
+    transition: var(--transition);
+}
+
+.wallet-option:hover .wallet-option-arrow {
+    color: var(--primary);
+    transform: translateX(4px);
+}
+
+/* ============================================
+   Toast
+   ============================================ */
+
+.toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 16px 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--shadow-lg);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: var(--transition);
+    z-index: 2000;
+}
+
+.toast.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.toast-success {
+    border-color: var(--success);
+}
+
+.toast-error {
+    border-color: var(--error);
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+
+.footer {
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    color: var(--text-tertiary);
+    font-size: 0.9rem;
+}
+
+.footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footer p {
+    margin: 0;
+}
+
+.footer a {
+    color: var(--primary);
+    transition: var(--transition);
+}
+
+.footer a:hover {
+    color: var(--primary-light);
+}
+
+@media (max-width: 640px) {
+    .footer .container {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+
+@media (max-width: 768px) {
+    :root {
+        --container-padding: 16px;
+    }
+    
+    .header .container {
+        flex-wrap: wrap;
+    }
+    
+    .hero {
+        padding: 48px 0;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .hero-stats {
+        gap: 32px;
+    }
+    
+    .hero-stat-value {
+        font-size: 1.75rem;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .search-input {
+        width: 100%;
+    }
+    
+    .nft-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    
+    .nft-card-body {
+        padding: 16px;
+    }
+    
+    .nft-card-name {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nft-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .wallet-badge {
+        flex-direction: column;
+        gap: 4px;
+        padding: 8px 12px;
+    }
+}
+
+/* Header Left - Back navigation */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.back-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    background: var(--bg-tertiary);
+    transition: all var(--transition);
+}
+
+.back-link:hover {
+    color: var(--text-primary);
+    background: var(--primary);
+}
+
+/* Download Link in Footer */
+.download-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+    display: inline-block;
+    opacity: 0.6;
+    transition: opacity var(--transition);
+}
+
+.download-link:hover {
+    opacity: 1;
+    color: var(--primary);
+}
+
+.footer .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* NFT Card Price & Offers */
+.nft-card-price.has-price {
+    color: var(--success);
+    font-weight: 700;
+}
+
+.nft-card-price .price-value {
+    font-size: 1rem;
+}
+
+.nft-card-offers.has-offers {
+    color: var(--primary);
+}
+
+.offer-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding: 0 0.375rem;
+    border-radius: var(--radius-full);
+    background: var(--primary);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-right: 0.25rem;
+}
+
+/* Last Transaction in Card - Compact */
+.nft-card-last-tx {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.nft-card-last-tx .nft-card-meta-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+}
+
+.last-tx-compact {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-align: right;
+}
+
+.last-tx-compact strong {
+    color: var(--success);
+    font-weight: 600;
+}
+
+.no-sales {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+}
+
+/* Collection Owner Badge - Discrete */
+.collection-owner-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--warning);
+    background: rgba(245, 158, 11, 0.1);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    margin-left: 6px;
+}
+
+/* Owner row with badge */
+.nft-card-owner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+/* Wallet Verified Badge */
+.wallet-verified {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--success);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+/* Deploy Section */
+.deploy-section {
+    margin-bottom: 2rem;
+}
+
+.deploy-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--gradient-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+
+.deploy-card-icon {
+    font-size: 2.5rem;
+}
+
+.deploy-card-content {
+    flex: 1;
+}
+
+.deploy-card-content h3 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.deploy-card-content p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* Owner Badge */
+/* Mint Button on Card */
+.btn-mint {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    z-index: 10;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 0.75rem;
+}
+
+.btn-mint:hover {
+    transform: scale(1.05);
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.form-help {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.form-help code {
+    display: block;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    word-break: break-all;
+}
+
+/* Download Button */
+.btn-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+}
+
+.btn-download svg {
+    flex-shrink: 0;
+}
+
+/* ============================================
+   Network Selector
+   ============================================ */
+
+.network-selector {
+    position: relative;
+}
+
+.network-current {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.network-current:hover {
+    border-color: var(--primary);
+}
+
+.network-icon {
+    font-size: 1rem;
+}
+
+.network-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    min-width: 200px;
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 100;
+    overflow: hidden;
+}
+
+.network-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: left;
+}
+
+.network-option:hover {
+    background: rgba(124, 92, 255, 0.1);
+}
+
+.network-option.active {
+    background: rgba(124, 92, 255, 0.15);
+    color: var(--primary);
+}
+
+.network-option-icon {
+    font-size: 1.1rem;
+}
+
+.network-option-name {
+    flex: 1;
+}
+
+.network-option-check {
+    color: var(--success);
+    opacity: 0;
+}
+
+.network-option.active .network-option-check {
+    opacity: 1;
+}
+
+/* ============================================
+   Deploy Modal Enhanced
+   ============================================ */
+
+.modal-lg {
+    max-width: 500px;
+}
+
+.deploy-network-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: rgba(124, 92, 255, 0.1);
+    border-radius: var(--radius-sm);
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.deploy-network-info .network-badge {
+    padding: 0.25rem 0.75rem;
+    background: var(--primary);
+    color: white;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.form-section {
+    margin-bottom: 1rem;
+}
+
+.form-hint {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    margin-top: 0.25rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 500px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-advanced {
+    margin-bottom: 1.5rem;
+}
+
+.form-advanced-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.form-advanced-toggle:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.form-advanced-toggle .advanced-arrow {
+    transition: transform 0.2s;
+}
+
+.form-advanced-toggle.open .advanced-arrow {
+    transform: rotate(180deg);
+}
+
+.form-advanced-content {
+    display: none;
+    padding: 1rem;
+    margin-top: -1px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+}
+
+.form-advanced-content.open {
+    display: block;
+}
+
+/* Responsive Deploy Card */
+@media (max-width: 640px) {
+    .deploy-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .deploy-card .btn {
+        width: 100%;
+    }
+}

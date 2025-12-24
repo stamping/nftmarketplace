@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFT Marketplace - 0xAddress</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Discover, collect, and sell extraordinary NFTs on the 0xAddress NFT Marketplace. Multi-chain support, low fees, and creator royalties.">
+    <meta name="keywords" content="NFT, marketplace, crypto, blockchain, digital art, collectibles, Ethereum, Rollux, Syscoin">
+    <meta name="author" content="0xAddress">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://0xaddress.com/dev/nft-marketplace/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://0xaddress.com/dev/nft-marketplace/">
+    <meta property="og:title" content="NFT Marketplace - 0xAddress">
+    <meta property="og:description" content="Discover, collect, and sell extraordinary NFTs. Multi-chain support, low fees, and creator royalties.">
+    <meta property="og:image" content="https://0xaddress.com/dev/nft-marketplace/img/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="0xAddress NFT Marketplace">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://0xaddress.com/dev/nft-marketplace/">
+    <meta name="twitter:title" content="NFT Marketplace - 0xAddress">
+    <meta name="twitter:description" content="Discover, collect, and sell extraordinary NFTs. Multi-chain support, low fees, and creator royalties.">
+    <meta name="twitter:image" content="https://0xaddress.com/dev/nft-marketplace/img/og-image.png">
+    <meta name="twitter:site" content="@0xAddress">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖼️</text></svg>">
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+    
+    <!-- Fonts & Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css?v=0.1.5">
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+    
+    <!-- AddToAny Share Buttons -->
+    <script async src="https://static.addtoany.com/menu/page.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="./" class="header-logo">
+                <div class="header-logo-icon">🖼️</div>
+                <div class="header-logo-text">
+                    NFT Marketplace
+                    <span>by 0xAddress.com</span>
+                </div>
+            </a>
+            <div class="header-actions">
+                <div class="header-controls">
+                    <button class="btn-icon" id="langToggle" title="Language">EN</button>
+                    <button class="btn-icon" id="themeToggle" title="Theme">☀️</button>
+                </div>
+                <!-- Network Selector -->
+                <div class="network-selector hidden" id="networkSelector">
+                    <button class="network-current" id="networkCurrentBtn" onclick="toggleNetworkDropdown()">
+                        <span class="network-icon" id="currentNetworkIcon">⚡</span>
+                        <span class="network-name" id="currentNetworkName">Rollux</span>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="network-dropdown hidden" id="networkDropdown">
+                        <!-- Networks populated by JS -->
+                    </div>
+                </div>
+                <div class="wallet-info hidden" id="walletInfo">
+                    <div class="wallet-badge">
+                        <span class="wallet-verified hidden" id="walletVerified" title="Verified">✓</span>
+                        <span class="wallet-address" id="walletAddress">0x000...0000</span>
+                        <span class="wallet-balance" id="walletBalance">0.00 SYS</span>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="connectBtn" data-i18n="connectWallet">Connect Wallet</button>
+                <button class="btn btn-danger btn-sm hidden" id="disconnectBtn" data-i18n="disconnect">Disconnect</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Share Bar -->
+    <div class="share-bar">
+        <div class="container">
+            <div class="share-bar-content">
+                <span class="share-bar-label" data-i18n="share">Share:</span>
+                <div class="a2a_kit a2a_kit_size_24 a2a_default_style">
+                    <a class="a2a_button_x" title="X / Twitter"></a>
+                    <a class="a2a_button_facebook" title="Facebook"></a>
+                    <a class="a2a_button_telegram" title="Telegram"></a>
+                    <a class="a2a_button_whatsapp" title="WhatsApp"></a>
+                    <a class="a2a_button_copy_link" title="Copy Link"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Bar -->
+    <div class="hero-bar"></div>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Deploy Section (visible when connected) -->
+            <section class="section deploy-section hidden" id="deploySection">
+                <div class="deploy-card">
+                    <div class="deploy-card-icon">🚀</div>
+                    <div class="deploy-card-content">
+                        <h3 data-i18n="createCollection">Create Collection</h3>
+                        <p data-i18n="deployDescription">Deploy your own NFT contract on the blockchain</p>
+                    </div>
+                    <button class="btn btn-primary" id="deployBtn" onclick="showDeployModal()">
+                        <span data-i18n="deployNFT">Deploy NFT Contract</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- NFTs Section -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title">🎨 All NFTs</h2>
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search NFTs..." data-i18n-placeholder="searchPlaceholder">
+                </div>
+                <div class="nft-grid" id="nftGrid">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p data-i18n="loading">Loading NFTs from blockchain...</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Powered by <a href="https://0xaddress.com" target="_blank">0xAddress.com</a></p>
+            <a href="nft-marketplace.zip" class="btn btn-secondary btn-download" id="downloadBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span data-i18n="download">Download</span>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Wallet Modal -->
+    <div class="modal-overlay" id="walletModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title" data-i18n="selectWallet">Select Wallet</div>
+                <button class="modal-close" onclick="closeModal('walletModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-subtitle" data-i18n="chooseWallet">Choose how you want to connect</p>
+                <div class="wallet-options">
+                    <button class="wallet-option" id="metamaskOption" onclick="connectWallet('metamask')">
+                        <div class="wallet-option-icon">
+                            <svg viewBox="0 0 40 40" fill="none"><path d="M35.9 3L22.2 13.2l2.5-6L35.9 3z" fill="#E2761B"/><path d="M4.1 3l13.6 10.3-2.4-6.1L4.1 3zm26.7 23.3l-3.6 5.5 7.7 2.1 2.2-7.5-6.3-.1zm-29.7.1l2.2 7.5 7.7-2.1-3.6-5.5-6.3.1z" fill="#E4761B"/><path d="M10.1 17.4l-2.2 3.3 7.7.3-.3-8.3-5.2 4.7zm19.8 0l-5.3-4.8-.2 8.4 7.7-.3-2.2-3.3z" fill="#E4761B"/><path d="M34.9 19.1l-7.1-2.1 2.2 3.3-3.2 6.2 4.2-.1h6.2l-2.3-7.3zM10.1 17l-7 2.1-2.4 7.3H7l4.2.1-3.2-6.2 2.1-3.3zm9.5 3.4l.5-7.9 2-5.6h-9.3l2 5.6.5 7.9.2 2.4v6.2h3.7l.1-6.2.3-2.4z" fill="#F6851B"/></svg>
+                        </div>
+                        <div class="wallet-option-info">
+                            <div class="wallet-option-name">MetaMask</div>
+                            <div class="wallet-option-status" id="metamaskStatus">Checking...</div>
+                        </div>
+                        <div class="wallet-option-arrow">→</div>
+                    </button>
+                    <button class="wallet-option" id="oxaddressOption" onclick="connectWallet('oxaddress')">
+                        <div class="wallet-option-icon">
+                            <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" fill="url(#g1)" stroke="#a855f7" stroke-width="2"/><text x="20" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="bold" font-family="Arial">0x</text><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#7c5cff"/><stop offset="100%" stop-color="#a855f7"/></linearGradient></defs></svg>
+                        </div>
+                        <div class="wallet-option-info">
+                            <div class="wallet-option-name">0xAddress</div>
+                            <div class="wallet-option-status" id="oxaddressStatus">Checking...</div>
+                        </div>
+                        <div class="wallet-option-arrow">→</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deploy Modal -->
+    <div class="modal-overlay" id="deployModal">
+        <div class="modal modal-lg">
+            <div class="modal-header">
+                <div class="modal-title">🚀 <span data-i18n="deployNFT">Deploy NFT Contract</span></div>
+                <button class="modal-close" onclick="closeModal('deployModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <!-- Network indicator -->
+                <div class="deploy-network-info">
+                    <span data-i18n="deployingOn">Deploying on:</span>
+                    <span class="network-badge" id="deployNetworkBadge">⚡ Rollux</span>
+                </div>
+
+                <!-- Basic Fields -->
+                <div class="form-section">
+                    <div class="form-group">
+                        <label data-i18n="collectionName">Collection Name</label>
+                        <input type="text" class="input" id="deployName" placeholder="My NFT Collection" value="My NFT Collection">
+                        <span class="form-hint" data-i18n="hintName">The display name of your NFT collection</span>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="collectionSymbol">Symbol</label>
+                        <input type="text" class="input" id="deploySymbol" placeholder="MNFT" value="MNFT">
+                        <span class="form-hint" data-i18n="hintSymbol">Short identifier (like a ticker), 3-5 characters</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Base URI</label>
+                        <input type="text" class="input" id="deployBaseURI" placeholder="https://mysite.com/metadata/" value="ipfs://QmExample/">
+                        <span class="form-hint" data-i18n="hintBaseURI">URL prefix for token metadata (IPFS or HTTP)</span>
+                    </div>
+                </div>
+
+                <!-- Advanced Options -->
+                <div class="form-advanced">
+                    <button type="button" class="form-advanced-toggle" onclick="toggleAdvanced()">
+                        <span data-i18n="advancedOptions">Advanced Options</span>
+                        <svg class="advanced-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="form-advanced-content" id="advancedOptions">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Max Supply</label>
+                                <input type="number" class="input" id="deployMaxSupply" placeholder="10000" value="10000" min="1">
+                                <span class="form-hint" data-i18n="hintMaxSupply">Maximum NFTs that can be minted</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Mint Price (ETH/SYS)</label>
+                                <input type="number" class="input" id="deployMintPrice" placeholder="0" value="0" min="0" step="0.001">
+                                <span class="form-hint" data-i18n="hintMintPrice">Price per mint (0 = free)</span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Royalty Receiver</label>
+                                <input type="text" class="input" id="deployRoyaltyReceiver" placeholder="0x...">
+                                <span class="form-hint" data-i18n="hintRoyaltyReceiver">Address to receive royalties (default: you)</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Royalty % (0-10)</label>
+                                <input type="number" class="input" id="deployRoyaltyFee" placeholder="5" value="5" min="0" max="10" step="0.1">
+                                <span class="form-hint" data-i18n="hintRoyaltyFee">% of secondary sales you receive</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-block" id="deployConfirmBtn" onclick="deployContract()">
+                    🚀 <span data-i18n="deploy">Deploy</span>
+                </button>
+                <p class="form-help" id="deployStatus"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mint Modal -->
+    <div class="modal-overlay" id="mintModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">🎨 <span data-i18n="mintNFT">Mint NFT</span></div>
+                <button class="modal-close" onclick="closeModal('mintModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label data-i18n="enterRecipient">Recipient address</label>
+                    <input type="text" class="input" id="mintRecipient" placeholder="0x...">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="enterTokenURI">Token URI (metadata URL)</label>
+                    <input type="text" class="input" id="mintTokenURI" placeholder="https://... or ipfs://...">
+                </div>
+                <input type="hidden" id="mintContract">
+                <button class="btn btn-primary btn-block" onclick="mintNFT()">
+                    🎨 <span data-i18n="mint">Mint</span>
+                </button>
+                <p class="form-help" id="mintStatus"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span id="toastIcon">✓</span>
+        <span id="toastText">Success</span>
+    </div>
+
+    <script src="js/index.js?v=0.1.4"></script>
+</body>
+</html>
